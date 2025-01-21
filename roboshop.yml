@@ -1,6 +1,6 @@
 - name: Roboshop App Playbook
-  hosts: localhost
-  connection: localhost
+  hosts: all
+  #connection: localhost
   become: yes
   roles:
     - "{{ app_name }}" #variable name
