@@ -1,0 +1,38 @@
+- name: Disable default Nginx
+  ansible.builtin.shell: dnf module disable nginx -y
+
+- name: Enable Nginx 24 version
+  ansible.builtin.shell: dnf module enable nginx:1.24 -y
+
+- name: Install Nginx
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
+
+- name: Copy nginx config file
+  ansible.builtin.template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+- name: start nginx
+  ansible.builtin.systemd_service:
+    name: nginx
+    state: started
+
+
+#  print_heading "clean up old frontend content"
+#  rm -rf /usr/share/nginx/html/* &>>$log_file
+#  status_check $?
+#
+#  print_heading "Download frontend content"
+#  curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$log_file
+#  status_check $?
+#
+#  print_heading "extract the frontend content"
+#  cd /usr/share/nginx/html &>>$log_file
+#  unzip /tmp/frontend.zip &>>$log_file
+#  status_check $?
+#
+#  print_heading "start system services"
+#  service_no_daemon
+#  status_check $?
