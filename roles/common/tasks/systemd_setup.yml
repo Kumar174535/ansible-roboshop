@@ -1,0 +1,18 @@
+
+#print_heading "system service started"
+#systemctl daemon-reload &>>$log_file
+#systemctl enable $app_name &>>$log_file
+#systemctl restart $app_name &>>$log_file
+#status_check $?
+
+- name: copy the service file
+  ansible.builtin.template:
+    src: "{{ app_name }}.service"
+    dest: etc/systemd/system/{{ app_name }}.service
+
+- name: system service started
+  ansible.builtin.systemd_service:
+    name: "{{ app_name }}"
+    state: restarted
+    enabled: yes
+    daemon-reload: yes
