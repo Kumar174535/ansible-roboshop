@@ -4,7 +4,7 @@
 - name: load nodejs
   ansible.builtin.include_role:
     name: common
-    file: nodejs
+    tasks_from: nodejs
 
 - name: Copy mongodb repo file
   ansible.builtin.copy:
