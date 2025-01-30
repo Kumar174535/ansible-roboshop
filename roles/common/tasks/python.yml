@@ -14,7 +14,7 @@
 
 - name: Load App Prerequisites
   ansible.builtin.include_tasks:
-    name: app_prerequisites.yml
+    file: app_prerequisites.yml
 
 - name: Install python Dependencies
   ansible.builtin.shell: pip3 install -r requirements.txt
@@ -23,4 +23,4 @@
 
 - name: Start Services
   ansible.builtin.include_tasks:
-    name: systemd_setup.yml
+    file: systemd_setup.yml
