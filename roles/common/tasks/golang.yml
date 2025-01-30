@@ -9,7 +9,6 @@
 
 - name: Download application dependencies
   ansible.builtin.shell: "{{ item }}"
-  dir: /app
   loop:
     - go mod init dispatch
     - go get
