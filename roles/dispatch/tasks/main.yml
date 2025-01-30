@@ -1,4 +1,5 @@
-
+- name: Set prompt
+  ansible.builtin.shell: set-prompt{{ app_name }}-{{ env }}
 
 - name: Copy Dispatch Service
   ansible.builtin.templates:
