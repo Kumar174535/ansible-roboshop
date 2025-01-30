@@ -1,5 +1,11 @@
-#print_heading "Copy Dispatch Service"
-#cp dispatch.service /etc/systemd/system/dispatch.service &>>$log_file
-#echo $?
-#
-#goland_setup
+
+
+- name: Copy Dispatch Service
+  ansible.builtin.templates:
+    src: dispatch.service
+    dest: /etc/systemd/system/dispatch.service
+
+- name: load golang setup
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: golang
