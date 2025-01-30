@@ -1,0 +1,26 @@
+#dnf install python3 gcc python3-devel -y &>>$log_file
+
+
+#systemd_setup
+
+- name: install python   #doubt
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: installed
+  loop:
+    - python3
+    - gcc
+    - python3-devel
+
+- name: Load App Prerequisites
+  ansible.builtin.include_tasks:
+    name: app_prerequisites.yml
+
+- name: Install python Dependencies
+  ansible.builtin.shell: pip3 install -r requirements.txt
+  args:
+    chdir: /app
+
+- name: Start Services
+  ansible.builtin.include_tasks:
+    name: systemd_setup.yml

@@ -1,0 +1,25 @@
+- name: Install Maven
+  ansible.builtin.dnf:
+    name: maven
+    state: installed
+
+- name: Load App pre-requisites
+  ansible.builtin.include_tasks:
+    tasks_from: app_prerequisites.yml
+
+- name: Install Maven Dependencies
+  ansible.builtin.shell: mvn clean package ; mv target/{{ app_name }}-1.0.jar {{ app_name }}.jar
+  args:
+    chdir: /app
+
+- name: install mysql client
+  ansible.builtin.dnf:
+    name: mysql
+    state: installed
+
+- name: load sql file   #doubt
+  ansible.builtin.shell: mysql -h mysql.devops24.shop -uroot -p$mysql_root_password < /app/db/$mysql_file.sql
+
+- name: systemd setup
+  ansible.builtin.include_tasks:
+    tasks_from: systemd_setup.yml
